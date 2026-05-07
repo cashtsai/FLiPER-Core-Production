@@ -1,0 +1,550 @@
+
+.clearfix:after {
+	visibility: hidden;
+}
+
+.desktop {
+	display: none !important;
+}
+.iconset-22 {
+	background-size: 300px !important;
+	background:url(/wp-content/themes/flipermag/assets/images/__22_online_design_exhibition/__22_Icon_0518@2x.png);
+}
+.full-artwork-wrap {
+	background-color: #000000;
+	padding:25px 0px 0px;
+}
+.full-artwork-wrap .full-artwork {
+	border-radius: 20px;
+	padding:28px 12.5px 82px;
+	background: #FFFFFF;
+}
+.full-artwork-wrap .small-22 {
+	text-align: right;
+	font: 500 12px/12px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0px;
+	color: #1A1A1A;
+	text-transform: uppercase;
+	display: block;
+}
+.full-artwork-wrap #prev-page {
+	width: 50px;
+    height: 50px;
+    display: block;
+    float: left;
+    background-position: -0px -61px;
+}
+.full-artwork-wrap .artwork-meta {
+	padding:42px 20px 66px;
+}
+.full-artwork-wrap .artwork-meta h1 {
+	font: 700 25px/40px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 1.25px;
+	color: #1A1A1A;
+}
+.full-artwork-wrap .artwork-meta .org-dept {
+	margin-top:30px;
+	font: 400 15px/25px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.75px;
+	color: #1A1A1A;
+}
+
+.full-artwork-wrap .top-author {
+	margin-top:10px;
+	font: 700 15px/25px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.75px;
+	color: #1A1A1A;
+}
+
+.full-artwork-wrap .artwork-meta .right .artwork-tag-wrap {
+	display: none;
+}
+
+.full-artwork-wrap .stat {
+	margin-top:10px;
+	height: 16px;
+}
+.full-artwork-wrap .stat .views {
+	display: inline-block;
+	font: 500 12px/16px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.6px;
+	color: #1A1A1A;
+}
+.full-artwork-wrap .stat .views span.iconset-22 {
+	display: block;
+	float:left;
+	background-position: -56px -166px;
+	width:27px;
+	height: 16px;
+	margin-right:4px;
+}
+.full-artwork-wrap .stat .share {
+	display: inline-block;
+	margin-left:16px;
+	font: 500 12px/16px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.6px;
+	color: #1A1A1A;
+}
+.full-artwork-wrap .stat .share span.iconset-22 {
+	display: block;
+	float:left;
+	background-position: -34px -166px;
+	width:22px;
+	height: 16px;
+	margin-right:4px;
+}
+
+.full-artwork-wrap .artwork-content .text {
+	text-align: justify;
+	padding:16px 20px 40px;
+	font: 500 16px/30px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	color: #1A1A1A;
+}
+.full-artwork-wrap .artwork-content .text .link {
+	text-decoration: underline;
+}
+
+.full-artwork-wrap .artwork-content .image {
+	max-width: 100%;
+	padding:16px 0px 40px;
+	display: block;
+	margin:0 auto;
+}
+.full-artwork-wrap .artwork-content .youtube {
+	max-width: 100%;
+	padding:16px 0px 40px;	
+}
+.full-artwork-wrap .artwork-content .title {
+	padding:16px 20px 0px;
+	font: 700 20px/35px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 1px;
+	color: #1A1A1A;
+}
+.full-artwork-wrap .artwork-link-wrap {
+	padding:16px 20px 0px;
+}
+.full-artwork-wrap .artwork-link-wrap h4 {
+	display: inline-block;
+	font: 700 18px/20px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.9px;
+	color: #1A1A1A;
+	height: 20px;
+	padding:0px 26px 0px 0px;
+}
+.full-artwork-wrap .artwork-link-wrap a {
+	display: inline-block;
+	text-decoration: underline;
+	font: 400 18px/20px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.9px;
+	color: #1A1A1A;
+	text-transform: uppercase;
+	height: 20px;
+	padding:0px 18px 0px 0px;
+}
+.full-artwork-wrap .artwork-link-wrap a:last-child {
+	padding:0px;
+}
+.full-artwork-wrap .share-link-wrap {
+	padding:40px 20px;
+}
+.full-artwork-wrap .share-link-wrap h4 {
+	display: inline-block;
+	font: 700 18px/20px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.9px;
+	color: #1A1A1A;
+	height: 20px;
+	padding:0px 26px 0px 0px;
+	vertical-align: top;
+}
+.full-artwork-wrap .share-link-wrap a.fb {
+	display: inline-block;
+	width:20px;
+	height: 20px;
+	margin:0px 18px 0px 0px;
+	background-position: 0px -145px;
+}
+.full-artwork-wrap .share-link-wrap a.link {
+	display: inline-block;
+	width:32px;
+	height: 20px;
+	background-position: -43px -145px;
+}
+.full-artwork-wrap .artwork-tag-wrap {
+	padding:16px 20px 40px;
+}
+
+.full-artwork-wrap .artwork-tag-wrap .tag {
+	display: block;
+	float:left;
+	margin:8px 20px 8px 0px;
+	text-align: center;
+	font: 700 14px/20px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.7px;
+	color: #1A1A1A;
+	background: #EFEFEF;
+	padding:10px 16px;
+	border-radius: 12px;
+}
+.full-artwork-wrap .artwork-tag-wrap .tag:last-child {
+	margin-right: 0px;
+}
+.full-artwork-wrap .artwork-author-wrap {
+	padding:42px 20px 56px;
+	background: #EFEFEF;
+	border-radius: 20px;
+}
+.full-artwork-wrap .artwork-author-wrap .artwork-author h2 {
+	font: 700 24px/24px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 1.2px;
+	color: #1A1A1A;
+	padding:10px 0px;
+}
+.full-artwork-wrap .artwork-author .org-dept {
+	padding:10px 0px 20px;
+	font: 700 18px/24px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.9px;
+	color: #1A1A1A;
+}
+.full-artwork-wrap .artwork-author-inner {
+	padding:0px 5px;
+	display: flex;
+    flex-wrap: wrap;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info {
+	padding:32px 35px;
+	width: 80px;
+	float:left;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .avatar img{
+	width: 80px;
+	height: 80px;
+	border-radius: 80px;
+	display: block;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .author-name {
+	text-align: center;
+	font: 700 16px/22px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.8px;
+	color: #1A1A1A;
+	padding:16px 0px 0px 0px;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .desktop.author-links {
+	display: none;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .author-links {
+	padding:12px 5px 0px;
+	display: flex;
+	justify-content:center;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .author-links.justify {
+	justify-content:space-between;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .author-links a {
+	text-align: center;
+	font: 500 18px/22px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.9px;
+	color: #747474;
+}
+.full-artwork-wrap .related-artwork {
+	background: #fff;
+	margin-top:45px;
+	padding:36px 12.5px 32px;
+}
+.full-artwork-wrap .related-artwork h2 {
+	text-align: left;
+	font: 700 30px/36px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 1.5px;
+	color: #1A1A1A;
+	padding:16px 0px;
+}
+.full-artwork-wrap .artwork-list .artwork-item {
+	padding:24px 0px;
+}
+.full-artwork-wrap .artwork-list .artwork-item .thumbnail {
+	width:350px;
+	height: 248px;
+	overflow: hidden;
+}
+.full-artwork-wrap .artwork-list .artwork-item .thumbnail img {
+	display:block;
+	width: 100%;
+	border-radius: 5px;
+}
+.full-artwork-wrap .artwork-list .artwork-item > a:hover .thumbnail img {
+	opacity: 0.5;
+}
+.full-artwork-wrap .artwork-list .artwork-item .artwork-item-meta {
+	padding:16px 88px 0px 0px;
+	position: relative;
+}
+.full-artwork-wrap .artwork-list .artwork-item .artwork-item-meta .right {
+	position: absolute;
+	top:18px;
+	right: 0px;
+}
+.full-artwork-wrap .artwork-list .artwork-item h3 {
+	font: 700 15px/24px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.75px;
+	color: #1A1A1A;
+}
+.full-artwork-wrap .artwork-list .artwork-item > a:hover h3 {
+	color:#8C8C8C;
+}
+.full-artwork-wrap .artwork-list .artwork-item .artwork-item-meta .artwork-author {
+	font: 400 12px/18px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.6px;
+	color: #1A1A1A;
+	padding:8px 0px 0px;
+}
+.full-artwork-wrap .artwork-list .artwork-item > a:hover .artwork-item-meta .artwork-author {
+	color:#8C8C8C;
+}
+.full-artwork-wrap .artwork-list .artwork-item .artwork-item-meta .stat {
+	margin-top:0px;
+}
+.full-artwork-wrap .artwork-list .artwork-item .artwork-item-meta .stat .views {
+	display: block;
+	text-align:right;
+	width:56px;
+}
+.full-artwork-wrap .artwork-list .artwork-item .artwork-item-meta .stat .views span.iconset-22 {
+	margin-left:auto;
+	margin-right:0px;
+	margin-bottom:4px;
+	float:none;
+}
+#sponsors {
+	padding:24px 0px 100px;
+	background: #EFEFEF;
+}
+#sponsors-inner {
+	width:320px;
+	margin:0 auto;
+	background: #FFFFFF;
+	border-radius: 30px;
+}
+#footer {
+	background: #EFEFEF;
+	padding:0px 0px 36px;
+	margin:0px;
+}
+
+@media screen and (min-width: 1100px) {
+.mobile {
+	display: none !important;
+}
+
+.desktop {
+	display: block !important;
+}
+
+.full-artwork-wrap {
+	margin-top: 24px;
+	padding-top: 72px;
+}
+.full-artwork-wrap .full-artwork {
+	width: 1000px;
+	margin:0 auto;
+	padding:42px 50px 72px;
+	box-sizing: border-box;
+}
+.full-artwork-wrap #prev-page {
+	width: 60px;
+    height: 60px;
+    display: block;
+    float: left;
+    background-position: -0px -0px;
+}
+.full-artwork-wrap #prev-page:hover {
+	background-position-x: -61px;	
+}
+.full-artwork-wrap .small-22:hover {
+	color: #8C8C8C;
+}
+.full-artwork-wrap .artwork-meta {
+	position: relative;
+	padding:42px 75px 72px;
+}
+.full-artwork-wrap .artwork-meta .left {
+	padding-right:270px;
+}
+.full-artwork-wrap .artwork-meta .right {
+	position: absolute;
+	text-align: right;
+	width: 230px;
+	top:42px;
+	right:75px;
+}
+.full-artwork-wrap .artwork-meta h1 {
+	font: 700 35px/50px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 1.75px;
+	padding-bottom: 42px;
+}
+.full-artwork-wrap .artwork-meta .org-dept {
+	margin-top:0px;
+	font: 400 14px/24px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.7px;
+	padding:5px 0px;
+}
+.full-artwork-wrap .top-author {
+	margin-top:0px;
+	font: 700 14px/24px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.7px;
+	padding:5px 0px;
+}
+.full-artwork-wrap .artwork-meta .right .artwork-tag-wrap {
+	display: block;
+	padding:0px;
+}
+.full-artwork-wrap .artwork-meta .right .artwork-tag-wrap .tag {
+	text-align: center;
+	font: 500 14px/20px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.7px;
+	color: #1A1A1A;
+	float:right;
+	margin:8px 0px 8px 20px;
+}
+.full-artwork-wrap .artwork-meta .right .artwork-tag-wrap .tag:last-child {
+	margin-left:0px;
+}
+.full-artwork-wrap .artwork-tag-wrap .tag:hover {
+	background: #DBDBDB;
+}
+.full-artwork-wrap .stat {
+	margin-top:10px;
+	height: 30px;
+	padding-bottom:9px;
+}
+.full-artwork-wrap .artwork-content .text {
+	padding:16px 75px 40px;
+	font: 500 16px/30px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	color: #1A1A1A;
+}
+.full-artwork-wrap .artwork-content .title {
+	padding:16px 75px 0px;
+	font: 700 24px/36px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 1.2px;
+}
+.full-artwork-wrap .artowk-link-and-share-link-wrap {
+	padding:16px 75px 40px;
+}
+.full-artwork-wrap .artwork-link-wrap {
+	padding:0px;
+	float:left;
+}
+.full-artwork-wrap .artwork-link-wrap h4 {
+	padding:0px 32px 0px 0px;
+}
+.full-artwork-wrap .artwork-link-wrap a:hover {
+	color: #8C8C8C;
+}
+.full-artwork-wrap .share-link-wrap {
+	padding:0px;
+	float:right;
+}
+.full-artwork-wrap .share-link-wrap h4 {
+	padding:0px 32px 0px 0px;
+}
+.full-artwork-wrap .share-link-wrap a.fb:hover {
+	background-position: -21px -145px;
+}
+.full-artwork-wrap .share-link-wrap a.link:hover {
+	background-position: -76px -145px;
+}
+.full-artwork-wrap .artwork-tag-wrap.mobile {
+	display: none;
+}
+.full-artwork-wrap .artwork-author-wrap {
+	margin-top:16px;
+	margin-bottom:40px;
+	padding:42px 52.5px 56px;
+}
+.full-artwork-wrap .artwork-author-wrap .artwork-author h2 {
+	padding:10px 22.5px;
+}
+.full-artwork-wrap .artwork-author .org-dept {
+	padding:10px 22.5px 20px;
+}
+.full-artwork-wrap .artwork-author-inner {
+	padding:0px;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info {
+	padding:32px 152.5px 32px 22.5px;
+	width: 265px;
+	box-sizing: border-box;
+	position: relative;
+	float:left;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .right {
+	position: absolute;
+	width:132.5px;
+	right:0px;
+	bottom:32px;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .avatar img{
+	width: 90px;
+	height: 90px;
+	border-radius: 90px;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .author-name {
+	text-align: left;
+	font: 700 15px/20px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.75px;
+	color: #1A1A1A;
+	padding:8px 0px 0px 0px;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .author-links {
+	display: none;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .desktop.author-links {
+	display: block;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .author-links {
+	padding:0px;
+	text-align: left;
+}
+.full-artwork-wrap .artwork-author-inner .artwork-author-info .author-links a {
+	text-align: left;
+	font: 400 15px/18px Montserrat, "PingFang TC", "Noto Sans CJK TC";
+	letter-spacing: 0.75px;
+	color: #747474;
+	padding-right:16px;
+}
+.full-artwork-wrap .related-artwork {
+	background: #fff;
+	margin-top:120px;
+	padding:64px 0px;
+}
+.full-artwork-wrap .related-artwork-inner {
+	width:1100px;
+	margin:0 auto;
+}
+.full-artwork-wrap .related-artwork h2 {
+	padding:16px 12.5px;
+}
+.full-artwork-wrap ul.artwork-list {
+	margin:0px -15px;
+}
+.full-artwork-wrap .artwork-list .artwork-item {
+	padding:24px 12.5px;
+	width:350px;
+	float:left;
+}
+.full-artwork-wrap .artwork-list .artwork-item-meta h3 {
+	height: 72px;
+	overflow: hidden;
+}
+.full-artwork-wrap .artwork-list .artwork-item-meta .artwork-author {
+	height: 36px;
+	overflow: hidden;
+}
+#sponsors {
+	padding:100px 0px 100px;
+}
+
+#sponsors-inner {
+	width:960px;
+	border-radius: 50px;
+}
+
+}
