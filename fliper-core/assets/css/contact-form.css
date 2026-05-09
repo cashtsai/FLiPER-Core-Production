@@ -1,0 +1,115 @@
+.fliper-contact-form-wrap {
+    max-width: 960px;
+    margin: 0 auto 96px;
+    color: #1b1b1b;
+}
+
+.fliper-contact-form,
+.fliper-contact-login {
+    border: 1px solid #ded8d0;
+    padding: 40px;
+    background: #fff;
+}
+
+.fliper-contact-form {
+    display: grid;
+    gap: 28px;
+}
+
+.fliper-contact-form label {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    color: #1b1b1b;
+    font-weight: 700;
+}
+
+.fliper-contact-form span {
+    font-size: 18px;
+}
+
+.fliper-contact-form input,
+.fliper-contact-form select,
+.fliper-contact-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d8d2ca;
+    border-radius: 4px;
+    padding: 14px 16px;
+    color: #1b1b1b;
+    background: #fff;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.fliper-contact-form textarea {
+    min-height: 220px;
+    resize: vertical;
+}
+
+.fliper-contact-form button,
+.fliper-contact-login a {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    border: 1px solid #1b1b1b;
+    border-radius: 4px;
+    padding: 0 28px;
+    color: #fff;
+    background: #1b1b1b;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.fliper-contact-alert {
+    margin: 0 0 24px;
+    border: 1px solid #ded8d0;
+    padding: 16px 18px;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.fliper-contact-alert-success {
+    border-color: #8bbf9d;
+    color: #1f6b37;
+    background: #f3fbf6;
+}
+
+.fliper-contact-alert-error {
+    border-color: #d89a9a;
+    color: #8c2323;
+    background: #fff6f6;
+}
+
+.fliper-contact-login h2 {
+    margin: 0 0 16px;
+    font-size: 28px;
+}
+
+.fliper-contact-login p {
+    margin: 0 0 28px;
+    color: #666;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.fliper-contact-hp {
+    position: absolute;
+    left: -9999px;
+}
+
+@media (max-width: 768px) {
+    .fliper-contact-form-wrap {
+        margin-bottom: 56px;
+    }
+
+    .fliper-contact-form,
+    .fliper-contact-login {
+        padding: 24px;
+    }
+}

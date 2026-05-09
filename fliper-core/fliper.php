@@ -3,7 +3,7 @@
  * Plugin Name: FLiPER Core
  * Plugin URI: https://flipermag.com
  * Description: Core runtime plugin for FLiPER. Keeps the live site APIs, user flows, favorites, notifications, and shared helpers.
- * Version: 0.1.0
+ * Version: 0.1.1
  * Author: Cash of FLiPER
  * Author URI: https://github.com/cashtsai
  */
@@ -89,6 +89,7 @@ class FLiPER {
         require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-favorites.php' );
         require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-comments.php' );
         require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-admin.php' );
+        require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-contact-form.php' );
         require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-rest-meta.php' );
         require_once( dirname( __FILE__ ) . '/fp-includes/rest-api/class-fp-rest-api.php' );
         require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-json-api.php' );
@@ -99,6 +100,10 @@ class FLiPER {
 
         if ( class_exists( 'FP_REST_Meta' ) ) {
             FP_REST_Meta::init();
+        }
+
+        if ( class_exists( 'FP_Contact_Form' ) ) {
+            FP_Contact_Form::init();
         }
  
         return self::$instance;
