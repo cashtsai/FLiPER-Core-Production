@@ -23,6 +23,7 @@ class FP_Contact_Form {
             return self::render_login_required();
         }
 
+        $user = wp_get_current_user();
         $message = '';
         $posted_type = self::posted_value( 'fliper_contact_type' );
         $posted_subject = self::posted_value( 'fliper_contact_subject' );
@@ -55,11 +56,23 @@ class FP_Contact_Form {
                         <option value="">請選擇問題類型</option>
                         <?php foreach ( self::get_type_options() as $key => $option ) : ?>
                             <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $posted_type, $key ); ?>>
-                                <?php echo esc_html( $option['label'] ); ?>
+                                <?php echo esc_html( self::format_option_label( $option ) ); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </label>
+
+                <div class="fliper-contact-user">
+                    <div>
+                        <span>姓名</span>
+                        <strong><?php echo esc_html( $user->display_name ?: $user->user_login ); ?></strong>
+                    </div>
+                    <div>
+                        <span>聯絡 Email</span>
+                        <strong><?php echo esc_html( $user->user_email ); ?></strong>
+                    </div>
+                    <p>系統會使用你的註冊 Email 作為回覆聯絡信箱，送出前請留意 Email 是否正確。</p>
+                </div>
 
                 <label>
                     <span>主旨</span>
@@ -84,7 +97,7 @@ class FP_Contact_Form {
             'fliper-contact-form',
             plugin_dir_url( dirname( __DIR__ ) . '/fliper.php' ) . 'assets/css/contact-form.css',
             array(),
-            '0.1.1'
+            '0.1.2'
         );
     }
 
@@ -214,6 +227,10 @@ class FP_Contact_Form {
         );
 
         return apply_filters( 'fliper_contact_form_type_options', $options );
+    }
+
+    private static function format_option_label( array $option ) {
+        return sprintf( '%s（%s）', $option['label'], strtoupper( strtok( $option['email'], '@' ) ) );
     }
 
     private static function posted_value( $key ) {

@@ -16,6 +16,41 @@
     gap: 28px;
 }
 
+.fliper-contact-user {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
+    border: 1px solid #ded8d0;
+    padding: 20px;
+    background: #faf9f7;
+}
+
+.fliper-contact-user div {
+    display: grid;
+    gap: 6px;
+}
+
+.fliper-contact-user span {
+    color: #777;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.fliper-contact-user strong {
+    color: #1b1b1b;
+    font-size: 17px;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.fliper-contact-user p {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: #777;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
 .fliper-contact-form label {
     display: grid;
     gap: 10px;
@@ -111,5 +146,9 @@
     .fliper-contact-form,
     .fliper-contact-login {
         padding: 24px;
+    }
+
+    .fliper-contact-user {
+        grid-template-columns: 1fr;
     }
 }
