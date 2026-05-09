@@ -50,18 +50,6 @@ class FP_Contact_Form {
                 <?php wp_nonce_field( self::NONCE_ACTION, 'fliper_contact_nonce' ); ?>
                 <input type="text" name="fliper_contact_website" value="" class="fliper-contact-hp" tabindex="-1" autocomplete="off">
 
-                <label>
-                    <span>問題類型</span>
-                    <select name="fliper_contact_type" required>
-                        <option value="">請選擇問題類型</option>
-                        <?php foreach ( self::get_type_options() as $key => $option ) : ?>
-                            <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $posted_type, $key ); ?>>
-                                <?php echo esc_html( self::format_option_label( $option ) ); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </label>
-
                 <div class="fliper-contact-user">
                     <div>
                         <span>姓名</span>
@@ -75,12 +63,24 @@ class FP_Contact_Form {
                 </div>
 
                 <label>
-                    <span>主旨</span>
+                    <span>問題類型 *</span>
+                    <select name="fliper_contact_type" required>
+                        <option value="">請選擇問題類型</option>
+                        <?php foreach ( self::get_type_options() as $key => $option ) : ?>
+                            <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $posted_type, $key ); ?>>
+                                <?php echo esc_html( self::format_option_label( $option ) ); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </label>
+
+                <label>
+                    <span>主旨 *</span>
                     <input type="text" name="fliper_contact_subject" value="<?php echo esc_attr( $posted_subject ); ?>" maxlength="120" required>
                 </label>
 
                 <label>
-                    <span>內容</span>
+                    <span>內容 *</span>
                     <textarea name="fliper_contact_message" rows="8" maxlength="5000" required><?php echo esc_textarea( $posted_body ); ?></textarea>
                 </label>
 
@@ -97,7 +97,7 @@ class FP_Contact_Form {
             'fliper-contact-form',
             plugin_dir_url( dirname( __DIR__ ) . '/fliper.php' ) . 'assets/css/contact-form.css',
             array(),
-            '0.1.2'
+            '0.1.3'
         );
     }
 
@@ -201,11 +201,11 @@ class FP_Contact_Form {
     private static function get_type_options() {
         $options = array(
             'general' => array(
-                'label' => '一般商務窗口',
+                'label' => '聯絡信箱',
                 'email' => 'contact@flipermag.com',
             ),
             'service' => array(
-                'label' => '一般客服',
+                'label' => '客服信箱',
                 'email' => 'service@flipermag.com',
             ),
             'support' => array(
@@ -215,9 +215,10 @@ class FP_Contact_Form {
             'editorial' => array(
                 'label' => '編輯部、投稿、採訪、內容合作',
                 'email' => 'FED@flipermag.com',
+                'prefix' => 'EDITOR',
             ),
             'pr' => array(
-                'label' => '公關、媒體邀請',
+                'label' => '公關、媒體邀請、廣告、專案',
                 'email' => 'pr@flipermag.com',
             ),
             'invoice' => array(
@@ -230,7 +231,9 @@ class FP_Contact_Form {
     }
 
     private static function format_option_label( array $option ) {
-        return sprintf( '%s（%s）', $option['label'], strtoupper( strtok( $option['email'], '@' ) ) );
+        $prefix = isset( $option['prefix'] ) ? $option['prefix'] : strtok( $option['email'], '@' );
+
+        return sprintf( '%s（%s）', $option['label'], strtoupper( $prefix ) );
     }
 
     private static function posted_value( $key ) {
