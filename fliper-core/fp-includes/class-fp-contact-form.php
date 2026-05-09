@@ -155,13 +155,14 @@ class FP_Contact_Form {
         }
 
         $option = $options[ $type ];
-        $mail_subject = sprintf( '[官網表單][%s] %s', $option['label'], $subject );
+        $mail_subject = sprintf( '[官網表單][%s][%s] %s', self::get_option_prefix( $option ), $option['label'], $subject );
         $body = self::build_mail_body( $user, $option, $subject, $content );
         $headers = array(
             'From: FLiPER 官網表單 <noreply@flipermag.com>',
             'Reply-To: ' . self::format_reply_to( $user ),
             'Content-Type: text/plain; charset=UTF-8',
             'X-FLiPER-Source: 官網表單',
+            'X-FLiPER-Contact-Type: ' . self::get_option_prefix( $option ),
         );
 
         $sent = wp_mail( $option['email'], $mail_subject, $body, $headers );
@@ -176,10 +177,16 @@ class FP_Contact_Form {
 
     private static function build_mail_body( WP_User $user, array $option, $subject, $content ) {
         $lines = array(
+            '【官網表單】' . self::get_option_prefix( $option ) . ' / ' . $option['label'],
+            '----------------------------------------',
+            '處理信箱：' . $option['email'],
+            '回覆對象：' . $user->display_name . ' <' . $user->user_email . '>',
+            '主旨：' . $subject,
+            '',
             '來源：官網表單',
             '問題類型：' . $option['label'],
+            '類型代碼：' . self::get_option_prefix( $option ),
             '收件信箱：' . $option['email'],
-            '主旨：' . $subject,
             '',
             '使用者資訊',
             '顯示名稱：' . $user->display_name,
@@ -231,9 +238,13 @@ class FP_Contact_Form {
     }
 
     private static function format_option_label( array $option ) {
+        return sprintf( '%s（%s）', $option['label'], self::get_option_prefix( $option ) );
+    }
+
+    private static function get_option_prefix( array $option ) {
         $prefix = isset( $option['prefix'] ) ? $option['prefix'] : strtok( $option['email'], '@' );
 
-        return sprintf( '%s（%s）', $option['label'], strtoupper( $prefix ) );
+        return strtoupper( $prefix );
     }
 
     private static function posted_value( $key ) {

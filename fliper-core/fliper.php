@@ -3,7 +3,7 @@
  * Plugin Name: FLiPER Core
  * Plugin URI: https://flipermag.com
  * Description: Core runtime plugin for FLiPER. Keeps the live site APIs, user flows, favorites, notifications, and shared helpers.
- * Version: 0.1.3
+ * Version: 0.1.4
  * Author: Cash of FLiPER
  * Author URI: https://github.com/cashtsai
  */
