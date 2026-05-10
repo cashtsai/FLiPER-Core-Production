@@ -91,6 +91,7 @@ class FLiPER {
         require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-admin.php' );
         require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-contact-form.php' );
         require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-rest-meta.php' );
+        require_once( dirname( __FILE__ ) . '/fp-includes/cors.php' );
         require_once( dirname( __FILE__ ) . '/fp-includes/rest-api/class-fp-rest-api.php' );
         require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-json-api.php' );
 
