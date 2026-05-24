@@ -46,7 +46,7 @@ class FLiPER_Article_Route extends WP_REST_Controller {
                 'methods'         => WP_REST_Server::READABLE,
                 'callback'        => array( $this, 'get_items' ),
                 'permission_callback' => array( $this, 'get_items_permissions_check' ),
-                'args'            => array( 'current_user_id' => get_current_user_id() )
+                'args'            => array()
             )
         ) );
 
@@ -55,7 +55,7 @@ class FLiPER_Article_Route extends WP_REST_Controller {
                 'methods'         => WP_REST_Server::READABLE,
                 'callback'        => array( $this, 'get_item' ),
                 'permission_callback' => array( $this, 'get_item_permissions_check' ),
-                'args'            => array( 'current_user_id' => get_current_user_id() )
+                'args'            => array()
             )
         ) );
 
@@ -64,7 +64,7 @@ class FLiPER_Article_Route extends WP_REST_Controller {
                 'methods'         => WP_REST_Server::READABLE,
                 'callback'        => array( $this, 'get_favorite_users' ),
                 'permission_callback' => array( $this, 'get_item_permissions_check' ),
-                'args'            => array( 'current_user_id' => get_current_user_id() )
+                'args'            => array()
             )
         ) );
 
@@ -73,7 +73,7 @@ class FLiPER_Article_Route extends WP_REST_Controller {
                 'methods'         => WP_REST_Server::READABLE,
                 'callback'        => array( $this, 'get_comments' ),
                 'permission_callback' => array( $this, 'get_item_permissions_check' ),
-                'args'            => array( 'current_user_id' => get_current_user_id() )
+                'args'            => array()
             )
         ) );
 
@@ -81,7 +81,7 @@ class FLiPER_Article_Route extends WP_REST_Controller {
             'methods' => WP_REST_Server::READABLE,
             'callback' => array( $this, 'get_explore_items'),
             'permission_callback' => array( $this, 'get_items_permissions_check' ),
-            'args' => array( 'current_user_id' => get_current_user_id() )
+            'args' => array()
         ) );
 
         // register_rest_route( $namespace, '/' . $base . '/schema', array(
@@ -282,7 +282,6 @@ class FLiPER_Article_Route extends WP_REST_Controller {
      */
     public function get_items_permissions_check( $request ) {
         $params = $request->get_params();
-        $attributes = $request->get_attributes();
 
         if ( fliper_legacy_api_token_matches( isset( $params[ 'access_token' ] ) ? $params[ 'access_token' ] : '' ) ) {
             global $current_user_id;
@@ -290,11 +289,12 @@ class FLiPER_Article_Route extends WP_REST_Controller {
             return true;
         }
 
-        if ( $attributes[ 'args' ][ 'current_user_id' ] == 0 )
+        $user_id = get_current_user_id();
+        if ( $user_id == 0 )
             return new WP_Error( ERROR_USER_NOT_LOGIN, __( '請先登入', 'fliper' ), array( 'status' => 401 ) );
 
         global $current_user_id;
-        $current_user_id = $attributes[ 'args' ][ 'current_user_id' ];
+        $current_user_id = $user_id;
         
         return true;
     }

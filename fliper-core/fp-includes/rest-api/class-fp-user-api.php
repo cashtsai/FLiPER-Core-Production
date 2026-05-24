@@ -30,7 +30,7 @@ class FLiPER_User_Route extends WP_REST_Controller {
         //         'methods'         => WP_REST_Server::READABLE,
         //         'callback'        => array( $this, 'get_items' ),
         //         'permission_callback' => array( $this, 'get_items_permissions_check' ),
-        //         'args'            => array( 'current_user_id' => get_current_user_id() )
+        //         'args'            => array()
         //     )
         // ) );
 
@@ -39,13 +39,13 @@ class FLiPER_User_Route extends WP_REST_Controller {
                 'methods'         => WP_REST_Server::READABLE,
                 'callback'        => array( $this, 'get_item' ),
                 'permission_callback' => array( $this, 'get_item_permissions_check' ),
-                'args' => array( 'current_user_id' => get_current_user_id() )
+                'args' => array()
             ),
             array(
                 'methods'         => WP_REST_Server::EDITABLE,
                 'callback'        => array( $this, 'update_item' ),
                 'permission_callback' => array( $this, 'update_item_permissions_check' ),
-                'args'            => array( 'current_user_id' => get_current_user_id() )
+                'args'            => array()
             )
         ) );
 
@@ -53,77 +53,77 @@ class FLiPER_User_Route extends WP_REST_Controller {
             'methods'         => WP_REST_Server::EDITABLE,
             'callback'        => array( $this, 'upload_avatar' ),
             'permission_callback' => array( $this, 'update_item_permissions_check' ),
-            'args'            => array( 'current_user_id' => get_current_user_id() )
+            'args'            => array()
         ) );
 
         register_rest_route( $namespace, '/' . $base . '/(?P<id>[\d]+)/cover', array(
             'methods'         => WP_REST_Server::EDITABLE,
             'callback'        => array( $this, 'upload_cover' ),
             'permission_callback' => array( $this, 'update_item_permissions_check' ),
-            'args'            => array( 'current_user_id' => get_current_user_id() )
+            'args'            => array()
         ) );
 
         register_rest_route( $namespace, '/' . $base . '/current', array(
             'methods' => WP_REST_Server::READABLE,
             'callback' => array( $this, 'current' ),
             'permission_callback' => array( $this, 'get_items_permissions_check' ),
-            'args' => array( 'current_user_id' => get_current_user_id() )
+            'args' => array()
         ) );
 
         register_rest_route( $namespace, '/' . $base . '/current/change-password', array(
             'methods' => WP_REST_Server::EDITABLE,
             'callback' => array( $this, 'change_password' ),
             'permission_callback' => array( $this, 'update_item_permissions_check' ),
-            'args' => array( 'current_user_id' => get_current_user_id() )
+            'args' => array()
         ) );
 
         register_rest_route( $namespace, '/' . $base . '/follow', array(
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => array( $this, 'follow' ),
             'permission_callback' => array( $this, 'update_item_permissions_check' ),
-            'args' => array( 'current_user_id' => get_current_user_id() )
+            'args' => array()
         ) );
 
         register_rest_route( $namespace, '/' . $base . '/unfollow', array(
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => array( $this, 'unfollow' ),
             'permission_callback' => array( $this, 'update_item_permissions_check' ),
-            'args' => array( 'current_user_id' => get_current_user_id() )
+            'args' => array()
         ) );
 
         register_rest_route( $namespace, '/' . $base . '/favorite/article', array(
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => array( $this, 'favorite_article' ),
             'permission_callback' => array( $this, 'update_item_permissions_check' ),
-            'args' => array( 'current_user_id' => get_current_user_id() )
+            'args' => array()
         ) );
 
         register_rest_route( $namespace, '/' . $base . '/unfavorite/article', array(
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => array( $this, 'unfavorite_article' ),
             'permission_callback' => array( $this, 'update_item_permissions_check' ),
-            'args' => array( 'current_user_id' => get_current_user_id() )
+            'args' => array()
         ) );
 
         register_rest_route( $namespace, '/' . $base . '/notifications', array(
             'methods' => WP_REST_Server::READABLE,
             'callback' => array( $this, 'get_notifications' ),
             'permission_callback' => array( $this, 'get_item_permissions_check' ),
-            'args' => array( 'current_user_id' => get_current_user_id() )
+            'args' => array()
         ) );
 
         register_rest_route( $namespace, '/' . $base . '/notifications/read', array(
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => array( $this, 'read_all_notifications' ),
             'permission_callback' => array( $this, 'update_item_permissions_check' ),
-            'args' => array( 'current_user_id' => get_current_user_id() )
+            'args' => array()
         ) );
 
         register_rest_route( $namespace, '/' . $base . '/explore', array(
             'methods' => WP_REST_Server::READABLE,
             'callback' => array( $this, 'get_explore_items'),
             'permission_callback' => array( $this, 'get_items_permissions_check' ),
-            'args' => array( 'current_user_id' => get_current_user_id() )
+            'args' => array()
         ) );
 
     }
@@ -213,8 +213,7 @@ class FLiPER_User_Route extends WP_REST_Controller {
     public function update_item( $request ) {
 
         $params = $request->get_params();
-        $attributes = $request->get_attributes();
-        if ( $attributes[ 'args' ][ 'current_user_id' ] != $params[ 'id' ] )
+        if ( get_current_user_id() != $params[ 'id' ] )
             return new WP_Error( ERROR_PERMISSION_DENIED, __( '權限不足', 'fliper' ) );
 
         $user = new WP_User( $params[ 'id' ] );
@@ -247,8 +246,7 @@ class FLiPER_User_Route extends WP_REST_Controller {
      */
     public function upload_avatar( $request ) {
         $params = $request->get_params();
-        $attributes = $request->get_attributes();
-        if ( $attributes[ 'args' ][ 'current_user_id' ] != $params[ 'id' ] )
+        if ( get_current_user_id() != $params[ 'id' ] )
             return new WP_Error( ERROR_PERMISSION_DENIED, __( '權限不足', 'fliper' ) );
 
         $user = new WP_User( $params[ 'id' ] );
@@ -307,8 +305,7 @@ class FLiPER_User_Route extends WP_REST_Controller {
      */
     public function upload_cover( $request ) {
         $params = $request->get_params();
-        $attributes = $request->get_attributes();
-        if ( $attributes[ 'args' ][ 'current_user_id' ] != $params[ 'id' ] )
+        if ( get_current_user_id() != $params[ 'id' ] )
             return new WP_Error( ERROR_PERMISSION_DENIED, __( '權限不足', 'fliper' ) );
 
         $user = new WP_User( $params[ 'id' ] );
@@ -328,8 +325,7 @@ class FLiPER_User_Route extends WP_REST_Controller {
      */
     public function current( $request ) {
 
-        $attributes = $request->get_attributes();
-        $item = new WP_User( $attributes[ 'args' ][ 'current_user_id' ] );
+        $item = new WP_User( get_current_user_id() );
 
         if ( '' != $item ) {
             $data = $this->prepare_item_for_response( $item->ID, $request );
@@ -348,8 +344,7 @@ class FLiPER_User_Route extends WP_REST_Controller {
      */
     public function change_password( $request ) {
         $params = $request->get_params();
-        $attributes = $request->get_attributes();
-        $user = new WP_User( $attributes[ 'args' ][ 'current_user_id' ] );
+        $user = new WP_User( get_current_user_id() );
 
         if ( '' == $params[ 'old_pass' ] )
             return new WP_Error( ERROR_CHANGE_PASSWORD_OLD_PASS_EMPTY, __( '請輸入目前的密碼', 'fliper' ) );
@@ -606,7 +601,6 @@ class FLiPER_User_Route extends WP_REST_Controller {
      */
     public function get_items_permissions_check( $request ) {
         $params = $request->get_params();
-        $attributes = $request->get_attributes();
 
         if ( fliper_legacy_api_token_matches( isset( $params[ 'access_token' ] ) ? $params[ 'access_token' ] : '' ) ) {
             global $current_user_id;
@@ -614,11 +608,12 @@ class FLiPER_User_Route extends WP_REST_Controller {
             return true;
         }
 
-        if ( $attributes[ 'args' ][ 'current_user_id' ] == 0 ) 
+        $user_id = get_current_user_id();
+        if ( $user_id == 0 ) 
             return new WP_Error( ERROR_USER_NOT_LOGIN, __( '請先登入', 'fliper' ) );
 
         global $current_user_id;
-        $current_user_id = $attributes[ 'args' ][ 'current_user_id' ];
+        $current_user_id = $user_id;
         
         return true;
     }
@@ -641,12 +636,12 @@ class FLiPER_User_Route extends WP_REST_Controller {
      */
     public function update_item_permissions_check( $request ) {
 
-        $attributes = $request->get_attributes();
-        if ( $attributes[ 'args' ][ 'current_user_id' ] == 0 )
+        $user_id = get_current_user_id();
+        if ( $user_id == 0 )
             return new WP_Error( ERROR_USER_NOT_LOGIN, __( '請先登入', 'fliper' ) );
 
         global $current_user_id;
-        $current_user_id = $attributes[ 'args' ][ 'current_user_id' ];
+        $current_user_id = $user_id;
         return true;
 
     }
@@ -660,8 +655,7 @@ class FLiPER_User_Route extends WP_REST_Controller {
     protected function prepare_item_for_database( $request ) {
 
         $params = $request->get_params();
-        $attributes = $request->get_attributes();
-        $user = new WP_User( $attributes[ 'args' ][ 'current_user_id' ] );
+        $user = new WP_User( get_current_user_id() );
         $user->display_name = $params[ 'display_name' ];
         $user->nickname = $params[ 'display_name' ];
         $user->user_url = $params[ 'website' ];
