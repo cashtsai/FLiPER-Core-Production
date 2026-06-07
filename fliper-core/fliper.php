@@ -3,12 +3,13 @@
  * Plugin Name: FLiPER Core
  * Plugin URI: https://flipermag.com
  * Description: Core runtime plugin for FLiPER. Keeps the live site APIs, user flows, favorites, notifications, and shared helpers.
- * Version: 0.1.4
+ * Version: 0.1.5
  * Author: Cash of FLiPER
  * Author URI: https://github.com/cashtsai
  */
 
 require_once( 'lib/Pusher.php' );
+require_once( dirname( __FILE__ ) . '/fp-includes/class-fp-go.php' );
 
 function fliper_legacy_api_token() {
     return defined( 'FLIPER_LEGACY_API_TOKEN' ) ? (string) FLIPER_LEGACY_API_TOKEN : '';
