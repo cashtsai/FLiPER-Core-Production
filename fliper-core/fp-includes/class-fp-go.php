@@ -14,10 +14,6 @@
 
 if (!defined('ABSPATH')) { exit; }
 
-if (function_exists('fliper_go_code_for_post')) {
-    return;
-}
-
 /* =========================================================
  *  可調整參數
  * ========================================================= */
@@ -77,22 +73,19 @@ function fliper_go_set_today($post_id, $note = '') {
     return fliper_go_code_for_post($post_id);
 }
 
-/* =========================================================
- *  路由（parse_request 直攔，URI 為準）：
- *  - 轉址（302 六碼直達、301 舊 /go）立即執行
- *  - 頁面渲染僅設旗標，延後到 template_redirect 以便
- *    get_header()/get_footer() 在主題環境完整載入後輸出
- * ========================================================= */
-add_action('parse_request', function ($wp) {
-    if (is_admin()) { return; }
-
+function fliper_go_request_path() {
     $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
-    $path = trim(urldecode((string) $path), '/');   // e.g. "6go", "6go/377274", "today"
+    return trim(urldecode((string) $path), '/'); // e.g. "6go", "6go/377274", "today"
+}
+
+function fliper_go_handle_request() {
+    if (is_admin()) { return ''; }
+
+    $path = fliper_go_request_path();
 
     // /today —— 當日好文落地頁（延後渲染）
     if ($path === 'today') {
-        $GLOBALS['fliper_go_view'] = 'today';
-        return;
+        return 'today';
     }
 
     // /6go —— 六碼輸入頁（支援 /6go/?code=123456 後援）
@@ -100,19 +93,16 @@ add_action('parse_request', function ($wp) {
         if (isset($_GET['code']) && $_GET['code'] !== '') {
             $pid = fliper_go_lookup($_GET['code']);
             if ($pid > 0) { wp_redirect(get_permalink($pid), 302); exit; }
-            $GLOBALS['fliper_go_view'] = 'input_err';
-            return;
+            return 'input_err';
         }
-        $GLOBALS['fliper_go_view'] = 'input';
-        return;
+        return 'input';
     }
 
     // /6go/123456 —— 六碼直達
     if (preg_match('#^6go/([0-9]{1,9})$#', $path, $m)) {
         $pid = fliper_go_lookup($m[1]);
         if ($pid > 0) { wp_redirect(get_permalink($pid), 302); exit; }
-        $GLOBALS['fliper_go_view'] = 'input_err';   // 查無此碼 → 友善提示
-        return;
+        return 'input_err'; // 查無此碼 → 友善提示
     }
 
     // 舊路徑 /go、/go/123456 —— 301 永久轉到 /6go 對應路徑（不斷鏈）
@@ -125,12 +115,28 @@ add_action('parse_request', function ($wp) {
         wp_redirect(home_url('/6go/' . $m[1]), 301);
         exit;
     }
-}, 0);
+
+    return '';
+}
+
+/* =========================================================
+ *  路由（URI 為準）：
+ *  - 轉址（302 六碼直達、301 舊 /go）立即執行
+ *  - 頁面渲染僅設旗標，延後到 template_redirect 以便
+ *    get_header()/get_footer() 在主題環境完整載入後輸出
+ * ========================================================= */
+function fliper_go_parse_request($wp) {
+    $view = fliper_go_handle_request();
+    if ($view !== '') {
+        $GLOBALS['fliper_go_view'] = $view;
+    }
+}
+add_action('parse_request', 'fliper_go_parse_request', -1000);
 
 /* 渲染：template_redirect 優先權 0，搶在 redirect_canonical(10) 之前
    （/today 與舊文 slug=today 同名，不先攔會被 canonical 301 導走） */
-add_action('template_redirect', function () {
-    $view = $GLOBALS['fliper_go_view'] ?? null;
+function fliper_go_template_redirect() {
+    $view = $GLOBALS['fliper_go_view'] ?? fliper_go_handle_request();
     if (!$view) { return; }
 
     global $wp_query;
@@ -150,7 +156,8 @@ add_action('template_redirect', function () {
         fliper_go_render_input($view === 'input_err');
     }
     exit;
-}, 0);
+}
+add_action('template_redirect', 'fliper_go_template_redirect', -1000);
 
 /* =========================================================
  *  文章頁（single）meta 六碼標籤
