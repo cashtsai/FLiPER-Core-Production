@@ -133,10 +133,16 @@ function fliper_go_parse_request($wp) {
 }
 add_action('parse_request', 'fliper_go_parse_request', -1000);
 
-/* 渲染：template_redirect 優先權 0，搶在 redirect_canonical(10) 之前
-   （/today 與舊文 slug=today 同名，不先攔會被 canonical 301 導走） */
-function fliper_go_template_redirect() {
+function fliper_go_current_view() {
     $view = $GLOBALS['fliper_go_view'] ?? fliper_go_handle_request();
+    if (!$view) { return; }
+    return $view;
+}
+
+/* 前置：搶在 redirect_canonical(10) 之前宣告這是有效頁面。
+   真正渲染會延後，避免提早 exit 讓 Site Kit 等外掛無法註冊 tracking tag。 */
+function fliper_go_prepare_template_redirect() {
+    $view = fliper_go_current_view();
     if (!$view) { return; }
 
     global $wp_query;
@@ -144,11 +150,19 @@ function fliper_go_template_redirect() {
     status_header(200);
     if (!defined('DONOTCACHEPAGE')) { define('DONOTCACHEPAGE', true); }
     nocache_headers();
+    remove_action('template_redirect', 'redirect_canonical');
 
     // 頁面標題與 SEO（noindex，避免 Yoast 用舊文資料）
     $title = ($view === 'today') ? FLIPER_GO_BRAND . ' — 今日好文' : FLIPER_GO_BRAND . ' GO — 輸入六碼';
     add_filter('pre_get_document_title', function () use ($title) { return $title; }, 99);
     add_filter('wpseo_robots', function () { return 'noindex,follow'; }, 99);
+}
+add_action('template_redirect', 'fliper_go_prepare_template_redirect', -1000);
+
+/* 渲染：延到一般 template_redirect 外掛註冊完後才輸出並結束。 */
+function fliper_go_template_redirect() {
+    $view = fliper_go_current_view();
+    if (!$view) { return; }
 
     if ($view === 'today') {
         fliper_go_render_today();
@@ -157,7 +171,7 @@ function fliper_go_template_redirect() {
     }
     exit;
 }
-add_action('template_redirect', 'fliper_go_template_redirect', -1000);
+add_action('template_redirect', 'fliper_go_template_redirect', 20);
 
 /* =========================================================
  *  文章頁（single）meta 六碼標籤
