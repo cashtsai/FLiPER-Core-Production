@@ -557,7 +557,23 @@
 
 		<?php endif; ?>
 
-		<div class="article-copyright"><?php $_ac = get_field( 'article_copyright', get_the_ID() ); echo is_array( $_ac ) ? $_ac['label'] : '不可轉載'; ?></div>
+		<div class="article-copyright"><?php
+		$_ac_field = function_exists( 'get_field_object' ) ? get_field_object( 'article_copyright', get_the_ID() ) : null;
+		if ( ! $_ac_field && function_exists( 'get_field_object' ) ) {
+			$_ac_field = get_field_object( 'field_5e80966c763de', get_the_ID() );
+		}
+		$_ac = function_exists( 'get_field' ) ? get_field( 'article_copyright', get_the_ID() ) : null;
+		if ( is_array( $_ac ) && isset( $_ac['label'] ) ) {
+			echo esc_html( $_ac['label'] );
+		} else {
+			$_ac_value = is_string( $_ac ) && '' !== $_ac ? $_ac : '';
+			if ( '' === $_ac_value && is_array( $_ac_field ) && ! empty( $_ac_field['default_value'] ) ) {
+				$_ac_value = is_array( $_ac_field['default_value'] ) ? reset( $_ac_field['default_value'] ) : $_ac_field['default_value'];
+			}
+			$_ac_choices = is_array( $_ac_field ) && isset( $_ac_field['choices'] ) && is_array( $_ac_field['choices'] ) ? $_ac_field['choices'] : [];
+			echo esc_html( $_ac_choices[ $_ac_value ] ?? '不可轉載' );
+		}
+		?></div>
 
 		<?php if ( ! wp_is_mobile() ) : if ( get_option( 'fliper_post_bottom_ad_banner_link' ) && get_option( 'fliper_post_bottom_ad_banner_img' ) ) : ?>
 		<div class="" style="margin-bottom:-50px;margin-top:100px;"><a target="_blank" style="display:block;" href="<?php echo get_option( 'fliper_post_bottom_ad_banner_link' ); ?>"><img src="<?php echo get_option( 'fliper_post_bottom_ad_banner_img' ); ?>" /></a></div>

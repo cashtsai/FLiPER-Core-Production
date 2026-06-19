@@ -33,12 +33,16 @@ class FP_REST_Meta {
         ];
 
         foreach ( $string_fields as $key ) {
-            register_post_meta( 'post', $key, [
+            $args = [
                 'show_in_rest'  => true,
                 'single'        => true,
                 'type'          => 'string',
                 'auth_callback' => $auth_callback,
-            ] );
+            ];
+            if ( 'article_copyright' === $key ) {
+                $args['default'] = 'cc';
+            }
+            register_post_meta( 'post', $key, $args );
         }
 
         register_post_meta( 'post', 'main_category', [
