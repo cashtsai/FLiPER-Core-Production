@@ -9,6 +9,7 @@ Text Domain:    flipermag
 */
 
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap');
 
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
@@ -527,7 +528,7 @@ iframe {
 
 #trending-articles .big-article .feature-image img {
 	width:360px;
-	height: 256px;
+	height: 225px;
 }
 
 #trending-articles .big-article .feature-image a:hover img {
@@ -596,7 +597,7 @@ iframe {
 
 #trending-articles .small-article .feature-image img {
 	width:150px;
-	height: 113px;
+	height: 94px;
 }
 
 #trending-articles .small-article .feature-image a:hover img {
@@ -674,7 +675,7 @@ iframe {
 
 .list-articles-wrap .article .feature-image img {
 	width:360px;
-	height: 229px;
+	height: 225px;
 }
 
 .list-articles-wrap .article .feature-image.auto-size img {
@@ -843,7 +844,7 @@ iframe {
 	.desktop-monthly-topic-slider .slider-article .feature-image img,
 	.single .readmore-articles .list-articles-wrap .article .feature-image img {
 		width:276px;
-		height:176px;
+		height:173px;
 	}
 
 	.desktop-monthly-topic-slider .slider-article .feature-image a:hover img,
@@ -965,7 +966,7 @@ iframe {
 
 	#trending-articles .big-article .feature-image img {
 		width:450px;
-		height: 320px;
+		height: 281px;
 	}
 
 	#trending-articles .big-article .meta {
@@ -1015,7 +1016,7 @@ iframe {
 
 	#trending-articles .small-article .feature-image img {
 		width:245px;
-		height: 185px;
+		height: 153px;
 	}
 
 	#trending-articles .small-article .title {
@@ -1085,7 +1086,7 @@ iframe {
 
 	.list-articles-wrap .article .feature-image img {
 		width:340px;
-		height: 216px;
+		height: 213px;
 	}
 
 	.list-articles-wrap .article .title {
@@ -1133,7 +1134,7 @@ iframe {
 .full-article .feature-image img {
 	display: block;
 	width: 360px;
-	height: 200px;
+	height: 225px;
 }
 
 .full-article .meta .category a {
@@ -1375,7 +1376,7 @@ iframe {
 
 	.full-article .feature-image img {
 		width:900px;
-		height: 500px;
+		height: 563px;
 		margin:0 auto;
 	}
 
@@ -1733,7 +1734,7 @@ iframe {
 
 #hero-article-list.list-articles-wrap .article .feature-image img {
 	width:120px;
-	height: 78px;
+	height: 75px;
 	display: block;
 }
 
@@ -1815,7 +1816,7 @@ iframe {
 
 	#hero-article-list.list-articles-wrap .article .feature-image img {
 		width:230px;
-		height: 128px;
+		height: 144px;
 	}
 
 	#hero-article-list.list-articles-wrap .article .title {
@@ -1824,3 +1825,78 @@ iframe {
 		font-weight: 600;
 	}
 }
+
+/*--------------------------------------------------------------
+    FLiPER Editorial Typography Pilot - 2026-05
+--------------------------------------------------------------*/
+:root {
+	--fliper-font-display-latin: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+	--fliper-font-serif-zh: "Noto Serif TC", "notoserifcjktc", "Noto Serif", serif;
+	--fliper-font-sans-zh: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+	--fliper-font-mono: "IBM Plex Mono", "Roboto Slab", monospace;
+}
+
+body,
+input,
+textarea,
+button,
+select {
+	font-family: var(--fliper-font-sans-zh);
+}
+
+.full-article h1,
+.full-article .content h2,
+.full-article .content h3,
+.full-article .content h4,
+.full-article .content h5,
+.full-article .content h6,
+.list-articles-wrap .article .title,
+#trending-articles .big-article .meta .title,
+#trending-articles .small-article .title,
+#home-feature-articles #hero-article .title,
+#hero-article-list.list-articles-wrap .article .title,
+.single .readmore-articles .list-articles-wrap .article .title,
+.desktop-monthly-topic-slider .slider-article .title {
+	font-family: var(--fliper-font-serif-zh);
+}
+
+.full-article .content p {
+	font-family: var(--fliper-font-sans-zh);
+	font-weight: 400;
+	line-height: 34px;
+}
+
+.full-article .content blockquote p {
+	font-family: var(--fliper-font-serif-zh);
+}
+
+.full-article .meta .category a,
+.full-article .meta .date,
+#main-menu h6,
+#mobile-user-menu .search-form .search-form-input,
+#latest-articles .hero-title-en h2,
+#trending-articles .small-article .count,
+#latest-articles .readmore a,
+.article-info,
+.category,
+.date {
+	font-family: var(--fliper-font-mono);
+}
+
+#latest-articles .hero-title-en h2,
+.brand-display,
+.latin-display {
+	font-family: var(--fliper-font-display-latin);
+	font-weight: 600;
+}
+
+@media screen and (min-width: 1100px) {
+	.full-article .content p {
+		font-family: var(--fliper-font-serif-zh);
+		font-weight: 300;
+		line-height: 34px;
+	}
+}
+
+/* phase1: unify featured display to 1.6, crop-to-fill so non-1.6 sources never stretch */
+.feature-image img{object-fit:cover;}
