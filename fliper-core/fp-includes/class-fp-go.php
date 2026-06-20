@@ -78,6 +78,22 @@ function fliper_go_request_path() {
     return trim(urldecode((string) $path), '/'); // e.g. "6go", "6go/377274", "today"
 }
 
+/**
+ * 將進入短連結時的 query string（utm_* 等）轉接到目標網址，
+ * 讓 GA4 能正確歸因社群導流。'code' 為六碼查詢用參數，不轉傳。
+ */
+function fliper_go_passthru_query($url) {
+    $params = isset($_GET) && is_array($_GET) ? $_GET : array();
+    unset($params['code']);
+    $params = array_filter($params, 'is_scalar');
+    if (empty($params)) { return $url; }
+    $clean = array();
+    foreach ($params as $k => $v) {
+        $clean[sanitize_key($k)] = sanitize_text_field((string) $v);
+    }
+    return add_query_arg($clean, $url);
+}
+
 function fliper_go_handle_request() {
     if (is_admin()) { return ''; }
 
@@ -92,7 +108,7 @@ function fliper_go_handle_request() {
     if ($path === '6go') {
         if (isset($_GET['code']) && $_GET['code'] !== '') {
             $pid = fliper_go_lookup($_GET['code']);
-            if ($pid > 0) { wp_redirect(get_permalink($pid), 302); exit; }
+            if ($pid > 0) { wp_redirect(fliper_go_passthru_query(get_permalink($pid)), 302); exit; }
             return 'input_err';
         }
         return 'input';
@@ -101,7 +117,7 @@ function fliper_go_handle_request() {
     // /6go/123456 —— 六碼直達
     if (preg_match('#^6go/([0-9]{1,9})$#', $path, $m)) {
         $pid = fliper_go_lookup($m[1]);
-        if ($pid > 0) { wp_redirect(get_permalink($pid), 302); exit; }
+        if ($pid > 0) { wp_redirect(fliper_go_passthru_query(get_permalink($pid)), 302); exit; }
         return 'input_err'; // 查無此碼 → 友善提示
     }
 
@@ -112,7 +128,8 @@ function fliper_go_handle_request() {
         exit;
     }
     if (preg_match('#^go/([0-9]{1,9})$#', $path, $m)) {
-        wp_redirect(home_url('/6go/' . $m[1]), 301);
+        $qs = isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] !== '' ? '?' . $_SERVER['QUERY_STRING'] : '';
+        wp_redirect(home_url('/6go/' . $m[1] . $qs), 301);
         exit;
     }
 
