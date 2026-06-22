@@ -1301,7 +1301,8 @@ function fp_role() {
             'backstage' => true,
             'analysis' => true,
             'customer_service' => false,
-            'edit_fliper_artworks' => true
+            'edit_fliper_artworks' => true,
+            'edit_published_posts' => true,
         )
     );
 
