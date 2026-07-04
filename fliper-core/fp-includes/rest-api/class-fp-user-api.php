@@ -901,16 +901,33 @@ class FLiPER_User_Route extends WP_REST_Controller {
      * @return bool 愛好成功回傳 true，失敗回傳 false
      */
     static function wpsa_subscribe_author_follow( $user_id, $author_id ) {
-        if ( ! class_exists( 'Wpsa_Model' ) )
-            return;
 
-        if ( self::wpsa_subscribe_author_has_followed( $user_id, $author_id ) ) 
+        if ( self::wpsa_subscribe_author_has_followed( $user_id, $author_id ) )
             return true;
 
-        $wpsa_model = new Wpsa_Model();
-        $wpsa_model->subscribeAuthor( $author_id, $user_id );
-        
-        return true;
+        global $wpdb;
+        $subscriber = get_userdata( $user_id );
+        $table_name = $wpdb->prefix . 'wpsa_subscribe_author';
+        $inserted_row = $wpdb->insert( $table_name,
+            array(
+                'author_id' => $author_id,
+                'subscriber_id' => $user_id,
+                'subscriber_email' => $subscriber ? $subscriber->user_email : '',
+                'status' => 'active',
+                'created_at' => current_time( 'mysql' ),
+                'updated_at' => current_time( 'mysql' )
+            ),
+            array(
+                '%d',
+                '%d',
+                '%s',
+                '%s',
+                '%s',
+                '%s'
+            )
+        );
+        if ( $inserted_row == false ) return false;
+        else return true;
     }
 
     /**
