@@ -212,6 +212,9 @@ class FLiPER_App_API extends WP_REST_Controller {
             'id'       => (string) $post->ID,
             'title'    => html_entity_decode( get_the_title( $post->ID ), ENT_QUOTES, 'UTF-8' ),
             'excerpt'  => $this->plain( get_the_excerpt( $post ) ),
+            // 編輯閱讀後推薦給讀者的理由（非摘要）。編輯在 WP 後台自訂欄位
+            // fp_editor_note 填寫；沒填就是 null,app 會退回 excerpt。
+            'editorNote' => $this->plain( (string) get_post_meta( $post->ID, 'fp_editor_note', true ) ) ?: null,
             'category' => $this->primary_category( $post ),
             'author'   => $this->author_obj( $post->post_author, false ),
             'image'    => $this->image_obj( get_post_thumbnail_id( $post->ID ) ),
