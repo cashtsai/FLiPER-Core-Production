@@ -725,11 +725,14 @@ class FLiPER {
             $post_id = $post->ID;
             $author_id = $post->post_author;
 
-            $wpsamodel = new Wpsa_Model();
-            if( $wpsamodel->get_num_subscribers( $author_id ) == 0 )
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'wpsa_subscribe_author';
+            $subscribers = $wpdb->get_results( $wpdb->prepare(
+                "SELECT subscriber_id FROM $table_name WHERE author_id = %d",
+                $author_id
+            ) );
+            if ( empty( $subscribers ) )
                 return;
-                 
-            $subscribers = $wpsamodel->getAllSubscribers( $author_id );
             foreach( $subscribers as $subscriber ){
                 $subscriber_id = $subscriber->subscriber_id;
 
