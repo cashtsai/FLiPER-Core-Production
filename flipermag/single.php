@@ -652,7 +652,7 @@
 					<button class="submit" data-id="<?php the_ID(); ?>">提交</button>
 					<input type="hidden" class="user-name" value="<?php echo esc_attr( get_userdata( get_current_user_id() )->display_name ); ?>" />
 					<input type="hidden" class="user-url" value="<?php echo get_author_posts_url( get_current_user_id() ); ?>" />
-					<input type="hidden" class="user-avatar" value="<?php echo get_wp_user_avatar_src( get_current_user_id(), array( 300, 300 ) ); ?>" />
+					<input type="hidden" class="user-avatar" value="<?php echo get_wp_user_avatar_src( get_current_user_id(), 300 ); ?>" />
 				</div>
 			</div>
 			<?php else : ?>
@@ -702,7 +702,7 @@
 										<button class="submit" data-id="<?php the_ID(); ?>">提交</button>
 										<input type="hidden" class="user-name" value="<?php echo esc_attr( get_userdata( get_current_user_id() )->display_name ); ?>" />
 										<input type="hidden" class="user-url" value="<?php echo get_author_posts_url( get_current_user_id() ); ?>" />
-										<input type="hidden" class="user-avatar" value="<?php echo get_wp_user_avatar_src( get_current_user_id(), array( 300, 300 ) ); ?>" />
+										<input type="hidden" class="user-avatar" value="<?php echo get_wp_user_avatar_src( get_current_user_id(), 300 ); ?>" />
 										<input type="hidden" class="reply-comment-id" value="<?php echo $parent_comment_id; ?>" />
 									</div>
 								</div>

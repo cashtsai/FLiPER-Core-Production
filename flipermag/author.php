@@ -7,7 +7,7 @@ $author = $author_id ? get_userdata( $author_id ) : null;
 if ( ! function_exists( 'fliper_author_avatar_src' ) ) {
 	function fliper_author_avatar_src( $user_id ) {
 		if ( function_exists( 'get_wp_user_avatar_src' ) ) {
-			$src = get_wp_user_avatar_src( $user_id, [ 300, 300 ] );
+			$src = get_wp_user_avatar_src( $user_id, 300 );
 			if ( $src ) {
 				return $src;
 			}
