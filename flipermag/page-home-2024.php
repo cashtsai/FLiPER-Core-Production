@@ -124,8 +124,59 @@ get_header();
 <div id="masthead" class="row hide-on-desktop">
 	<h4><?php echo date("Y l", $today); ?></h3>
 	<h3><?php echo date('F d', $today); ?></h3>
-	<h5>Let Wonders Enrich Our Life</h5>
+	<h5>Keep Exploring</h5>
 </div>
+
+<?php
+// ── FLiPER 4.0 · 今日精選（Proposal 04）─────────────────────────────
+// 讀 6go 的每日選文（fliper_go_today）。理由與封面／Today Pick 同源：
+// fp_editor_note 優先、罐頭 fed_today_note 墊底。取不到文章就整段不渲染。
+$tp_id = (int) get_option( 'fliper_go_today' );
+$tp    = $tp_id ? get_post( $tp_id ) : null;
+if ( $tp && 'publish' === $tp->post_status ) :
+	$tp_reason = trim( (string) get_post_meta( $tp_id, 'fp_editor_note', true ) );
+	if ( '' === $tp_reason ) $tp_reason = trim( (string) get_option( 'fed_today_note' ) );
+	$tp_author = get_the_author_meta( 'display_name', $tp->post_author );
+	$tp_column = trim( (string) get_user_meta( $tp->post_author, 'column_name', true ) );
+	$tp_code   = str_pad( (string) $tp_id, 6, '0', STR_PAD_LEFT );
+?>
+<style>
+#today-pick { margin-bottom: 56px; }
+#today-pick .tp40-kicker { display:flex; align-items:center; gap:14px; font:700 11px/1 "Roboto Slab"; letter-spacing:4px; color:#8C8C8C; margin-bottom:20px; }
+#today-pick .tp40-kicker::after { content:""; flex:1; height:1px; background:#E8E4DC; }
+#today-pick .tp40 { display:flex; gap:28px; align-items:flex-start; }
+#today-pick .tp40-img { position:relative; flex:5; display:block; }
+#today-pick .tp40-img img { width:100%; height:auto; display:block; }
+#today-pick .tp40-code { position:absolute; right:10px; bottom:8px; font:700 10px/1 "Roboto Slab"; letter-spacing:3px; color:rgba(255,255,255,.78); }
+#today-pick .tp40-main { flex:4; }
+#today-pick .tp40-title { font-family:"Noto Serif","notoserifcjktc",serif; font-size:22px; line-height:1.55; font-weight:700; margin:0 0 10px; }
+#today-pick .tp40-title a { color:#1A1A1A; text-decoration:none; }
+#today-pick .tp40-byline { font-size:12px; letter-spacing:1px; color:#8C8C8C; margin-bottom:14px; }
+#today-pick .tp40-byline b { color:#1A1A1A; font-weight:500; font-family:"Noto Serif","notoserifcjktc",serif; }
+#today-pick .tp40-reason { border-left:3px solid #FFC612; padding:4px 0 4px 14px; font-family:"Noto Serif","notoserifcjktc",serif; font-size:15px; line-height:1.9; color:#1A1A1A; }
+#today-pick .tp40-reason small { display:block; font:700 9px/1 "Roboto Slab"; letter-spacing:3px; color:#8C8C8C; margin-top:10px; }
+@media screen and (max-width: 1099px) {
+	#today-pick .tp40 { flex-direction:column; gap:16px; }
+	#today-pick { margin-bottom: 40px; }
+}
+</style>
+<div id="today-pick" class="row">
+	<div class="tp40-kicker"><span>TODAY'S PICK · <?php echo date( 'm.d', $today ); ?></span></div>
+	<div class="tp40">
+		<a class="tp40-img" href="<?php echo get_permalink( $tp_id ); ?>">
+			<?php echo get_the_post_thumbnail( $tp_id, 'home-top-big-2x' ); ?>
+			<span class="tp40-code"><?php echo esc_html( $tp_code ); ?></span>
+		</a>
+		<div class="tp40-main">
+			<h2 class="tp40-title"><a href="<?php echo get_permalink( $tp_id ); ?>"><?php echo esc_html( get_the_title( $tp_id ) ); ?></a></h2>
+			<div class="tp40-byline">by <b><?php echo esc_html( $tp_author ); ?></b><?php if ( $tp_column ) echo ' ｜ ' . esc_html( $tp_column ); ?></div>
+			<?php if ( $tp_reason ) : ?>
+			<div class="tp40-reason"><?php echo esc_html( $tp_reason ); ?><small>WHY WE PICKED IT ── FLiPER 編輯室</small></div>
+			<?php endif; ?>
+		</div>
+	</div>
+</div>
+<?php endif; ?>
 
 <div id="latest-articles">
 	<div class="hide-on-desktop row" style="border-top: 2px solid #1A1A1A;margin-bottom: 30px;">

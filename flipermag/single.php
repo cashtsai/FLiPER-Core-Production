@@ -592,15 +592,80 @@
 		<?php endif; ?>
 		<a class="share iconset" href="#" data-url="<?php the_permalink(); ?>"></a>
 	</div>
-	<div class="author-wrap">
-		<div class="author">
-			<a class="avatar" href="<?php echo get_author_posts_url( get_the_author_meta('ID') ); ?>"><?php echo get_avatar( get_the_author_meta('email'), '300' ); ?></a>
-			<div class="author-meta">
-				<h2 class="name"><?php the_author_posts_link(); ?></h2>
-			</div>
-			<div class="description hide-on-mobile"><?php echo get_the_author_meta( 'description' ); ?></div>
+	<?php
+	// ── FLiPER 4.0 · 認識這個人（Proposal 06）────────────────────────
+	// byline「名字｜專欄」與封面系統同構；無專欄只置中名字（同封面規則）。
+	$au_id     = (int) get_the_author_meta( 'ID' );
+	$au_column = trim( (string) get_user_meta( $au_id, 'column_name', true ) );
+	$au_bio    = trim( (string) get_the_author_meta( 'description' ) );
+	$au_url    = get_author_posts_url( $au_id );
+	$au_links  = array();
+	foreach ( array( 'instagram' => 'INSTAGRAM', 'threads' => 'THREADS', 'facebook' => 'FACEBOOK', 'tiktok' => 'TIKTOK', 'website' => 'WEBSITE' ) as $au_k => $au_label ) {
+		$au_v = trim( (string) get_the_author_meta( $au_k ) );
+		if ( $au_v ) $au_links[ $au_label ] = ( 0 === strpos( $au_v, 'http' ) ) ? $au_v : 'https://' . ltrim( $au_v, '/@' );
+	}
+	?>
+	<style>
+	.au40 { max-width:560px; margin:48px auto 0; text-align:center; }
+	.au40 .au40-ava { display:inline-block; width:86px; height:86px; border-radius:50%; border:1px solid #C9C2B4; padding:3px; }
+	.au40 .au40-ava img { width:100%; height:100%; border-radius:50%; display:block; object-fit:cover; }
+	.au40 .au40-byline { display:flex; align-items:center; justify-content:center; gap:14px; margin:14px 0 6px; }
+	.au40 .au40-name { font-family:"Noto Serif","notoserifcjktc",serif; font-size:18px; font-weight:700; color:#1A1A1A; text-decoration:none; }
+	.au40 .au40-sep { color:#C9C2B4; }
+	.au40 .au40-col { font-size:13px; color:#8C8C8C; letter-spacing:1px; }
+	.au40 .au40-bio { font-size:13.5px; color:#555; line-height:1.9; margin:10px 0 16px; }
+	.au40 .au40-soc { display:flex; gap:18px; justify-content:center; flex-wrap:wrap; font:700 10px/1 "Roboto Slab"; letter-spacing:2px; }
+	.au40 .au40-soc a { color:#8C8C8C; text-decoration:none; border-bottom:1px solid #E8E4DC; padding-bottom:3px; }
+	.au40 .au40-more { margin-top:30px; border-top:1px solid #E8E4DC; padding-top:20px; text-align:left; }
+	.au40 .au40-more-lbl { font:700 10px/1 "Roboto Slab"; letter-spacing:3px; color:#8C8C8C; text-align:center; margin-bottom:16px; }
+	.au40 .au40-more-row { display:flex; gap:18px; }
+	.au40 .au40-more-it { flex:1; text-decoration:none; }
+	.au40 .au40-more-th { display:block; margin-bottom:8px; }
+	.au40 .au40-more-th img { width:100%; height:auto; display:block; }
+	.au40 .au40-more-t { font-family:"Noto Serif","notoserifcjktc",serif; font-size:13.5px; line-height:1.6; font-weight:600; color:#1A1A1A; }
+	.cta40 { max-width:560px; margin:44px auto 8px; text-align:center; padding:44px 20px; border-top:1px solid #1A1A1A; border-bottom:1px solid #1A1A1A; position:relative; }
+	.cta40::before, .cta40::after { content:""; position:absolute; left:0; right:0; height:1px; background:#1A1A1A; }
+	.cta40::before { top:4px; } .cta40::after { bottom:4px; }
+	.cta40 .cta40-line { font-family:"Noto Serif","notoserifcjktc",serif; font-size:18px; line-height:2; margin:0 auto 22px; color:#1A1A1A; }
+	.cta40 .cta40-line em { font-style:normal; background:linear-gradient(transparent 62%, #FFC612 62%, #FFC612 92%, transparent 92%); }
+	.cta40 .cta40-btn { display:inline-block; border:1px solid #1A1A1A; padding:11px 34px; font-size:13px; letter-spacing:3px; text-decoration:none; color:#1A1A1A; transition:background .2s,color .2s; }
+	.cta40 .cta40-btn:hover { background:#1A1A1A; color:#FFF; }
+	.cta40 .cta40-sub { font:700 9px/1 "Roboto Slab"; letter-spacing:3px; color:#8C8C8C; margin-top:14px; }
+	@media screen and (max-width: 767px) { .au40 .au40-more-row { flex-direction:column; } }
+	</style>
+	<div class="author-wrap au40">
+		<a class="au40-ava" href="<?php echo $au_url; ?>"><?php echo get_avatar( get_the_author_meta('email'), '300' ); ?></a>
+		<div class="au40-byline">
+			<a class="au40-name" href="<?php echo $au_url; ?>"><?php the_author(); ?></a>
+			<?php if ( $au_column ) : ?><span class="au40-sep">｜</span><span class="au40-col"><?php echo esc_html( $au_column ); ?></span><?php endif; ?>
 		</div>
-		<div class="description hide-on-desktop"><?php echo get_the_author_meta( 'description' ); ?></div>
+		<?php if ( $au_bio ) : ?><div class="au40-bio"><?php echo esc_html( $au_bio ); ?></div><?php endif; ?>
+		<div class="au40-soc">
+			<?php foreach ( $au_links as $au_label => $au_href ) : ?><a href="<?php echo esc_url( $au_href ); ?>" target="_blank" rel="noopener"><?php echo $au_label; ?></a><?php endforeach; ?>
+			<a href="<?php echo $au_url; ?>">更多文章 →</a>
+		</div>
+		<?php
+		$au_more = new WP_Query( array( 'author' => $au_id, 'posts_per_page' => 3, 'post__not_in' => array( get_the_ID() ), 'no_found_rows' => true ) );
+		if ( $au_more->have_posts() ) : ?>
+		<div class="au40-more">
+			<div class="au40-more-lbl">── 再認識他一點 ──</div>
+			<div class="au40-more-row">
+				<?php while ( $au_more->have_posts() ) : $au_more->the_post(); ?>
+				<a class="au40-more-it" href="<?php the_permalink(); ?>">
+					<span class="au40-more-th"><?php the_post_thumbnail( 'list-articles-thumb-2x' ); ?></span>
+					<span class="au40-more-t"><?php the_title(); ?></span>
+				</a>
+				<?php endwhile; wp_reset_postdata(); ?>
+			</div>
+		</div>
+		<?php endif; ?>
+	</div>
+
+	<?php // ── FLiPER 4.0 · 明天的敘事者（Proposal 07）—— 4.0 原句不改寫 ── ?>
+	<div class="cta40">
+		<div class="cta40-line">今天被故事觸動的人，<br>也能在明天，<em>成為帶來另一個故事的人</em>。</div>
+		<a class="cta40-btn" href="/apply-writer/">申請成為專欄作家</a>
+		<div class="cta40-sub">KEEP EXPLORING</div>
 	</div>
 
 	<!-- FB share count. TODO: remove -->
