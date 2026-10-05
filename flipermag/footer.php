@@ -27,7 +27,11 @@
 
 	</div>
 	<div class="row">
-		<div class="copyright">© 2025 為善彰之股份有限公司 <br/>All Rights Reserved.</div>
+		<div class="footer-tagline" style="text-align:center;margin-bottom:10px;">
+			<div style="font:700 13px/1.6 'Roboto Slab',serif;letter-spacing:3px;color:#1A1A1A;">KEEP EXPLORING</div>
+			<div style="font-size:12px;line-height:1.8;letter-spacing:1px;color:#777;">帶著渺小的自己，探索廣大的世界。</div>
+		</div>
+		<div class="copyright">© 2026 為善彰之股份有限公司 <br/>All Rights Reserved.</div>
 	</div>
 </div>
 
