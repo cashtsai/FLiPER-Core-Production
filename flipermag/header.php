@@ -29,6 +29,16 @@ $today = current_time('timestamp');
 
 	<?php wp_head(); ?>
 
+	<script>
+	/* 2014 媒體遺失事故止血:載入失敗的圖直接隱藏,列表卡槽位以米白底呈現,
+	   避免整站露出瀏覽器的破圖「?」。capture phase 才接得到 img error。 */
+	document.addEventListener('error', function (e) {
+		var t = e.target;
+		if (t && t.tagName === 'IMG') { t.style.visibility = 'hidden'; }
+	}, true);
+	</script>
+	<style>.feature-image{background:#F3F1EC;}</style>
+
 </head><!--#header-->
 <body <?php body_class(); ?>>
 
