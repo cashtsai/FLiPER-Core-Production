@@ -637,7 +637,7 @@
 		<a class="au40-ava" href="<?php echo $au_url; ?>"><?php echo get_avatar( get_the_author_meta('email'), '300' ); ?></a>
 		<div class="au40-byline">
 			<a class="au40-name" href="<?php echo $au_url; ?>"><?php the_author(); ?></a>
-			<?php if ( $au_column ) : ?><span class="au40-sep">｜</span><span class="au40-col"><?php echo esc_html( $au_column ); ?></span><?php endif; ?>
+			<?php if ( $au_column ) : ?><span class="au40-sep">｜</span><a class="au40-col" style="text-decoration:none;" href="<?php echo $au_url; ?>"><?php echo esc_html( $au_column ); ?></a><?php endif; ?>
 		</div>
 		<?php if ( $au_bio ) : ?><div class="au40-bio"><?php echo esc_html( $au_bio ); ?></div><?php endif; ?>
 		<div class="au40-soc">

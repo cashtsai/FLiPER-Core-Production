@@ -426,3 +426,12 @@ add_action( 'template_redirect', function () {
         exit;
     }
 }, 1 );
+
+// ── FLiPER 4.0 · 創作者入口(Proposal 05)────────────────────────────
+// 人物卡的「城市 · 領域」標籤:作者後台自填,編輯可改。沒填也能上線——
+// 領域 fallback 取最近五篇最常見的分類(見 page-creators.php)。
+add_filter( 'user_contactmethods', function ( $methods ) {
+	$methods['creator_city']  = '創作者城市(人物卡顯示,例:TAIPEI)';
+	$methods['creator_field'] = '創作者領域(人物卡顯示,例:ILLUSTRATION)';
+	return $methods;
+} );
