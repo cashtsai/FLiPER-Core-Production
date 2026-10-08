@@ -141,23 +141,30 @@ if ( $tp && 'publish' === $tp->post_status ) :
 	$tp_code   = str_pad( (string) $tp_id, 6, '0', STR_PAD_LEFT );
 ?>
 <style>
-#today-pick { margin-bottom: 56px; }
-#today-pick .tp40-kicker { display:flex; align-items:center; gap:14px; font:700 11px/1 "Roboto Slab"; letter-spacing:4px; color:#8C8C8C; margin-bottom:20px; }
+/* 上緣需要呼吸:kicker 的髮絲線原本幾乎貼著 masthead 的 FLiPER logo 下緣 */
+#today-pick { margin-top: 26px; margin-bottom: 56px; }
+#today-pick .tp40-kicker { display:flex; align-items:center; gap:14px; font:700 11px/1 "Roboto Slab"; letter-spacing:4px; color:#8C8C8C; margin-bottom:22px; }
 #today-pick .tp40-kicker::after { content:""; flex:1; height:1px; background:#E8E4DC; }
-#today-pick .tp40 { display:flex; gap:28px; align-items:flex-start; }
+#today-pick .tp40 { display:flex; gap:34px; align-items:stretch; }
 #today-pick .tp40-img { position:relative; flex:5; display:block; }
 #today-pick .tp40-img img { width:100%; height:auto; display:block; }
 #today-pick .tp40-code { position:absolute; right:10px; bottom:8px; font:700 10px/1 "Roboto Slab"; letter-spacing:3px; color:rgba(255,255,255,.78); }
-#today-pick .tp40-main { flex:4; }
-#today-pick .tp40-title { font-family:"Noto Serif","notoserifcjktc",serif; font-size:22px; line-height:1.55; font-weight:700; margin:0 0 10px; }
+/* 文字欄撐滿封面高度並分散對齊——否則三行文字堆在頂端、右半下方整片空白 */
+#today-pick .tp40-main { flex:4; display:flex; flex-direction:column; justify-content:center; padding:4px 0; }
+#today-pick .tp40-title { font-family:"Noto Serif","notoserifcjktc",serif; font-size:24px; line-height:1.6; font-weight:700; margin:0 0 12px; }
 #today-pick .tp40-title a { color:#1A1A1A; text-decoration:none; }
-#today-pick .tp40-byline { font-size:12px; letter-spacing:1px; color:#8C8C8C; margin-bottom:14px; }
+#today-pick .tp40-byline { font-size:12px; letter-spacing:1px; color:#8C8C8C; margin-bottom:18px; }
 #today-pick .tp40-byline b { color:#1A1A1A; font-weight:500; font-family:"Noto Serif","notoserifcjktc",serif; }
-#today-pick .tp40-reason { border-left:3px solid #FFC612; padding:4px 0 4px 14px; font-family:"Noto Serif","notoserifcjktc",serif; font-size:15px; line-height:1.9; color:#1A1A1A; }
-#today-pick .tp40-reason small { display:block; font:700 9px/1 "Roboto Slab"; letter-spacing:3px; color:#8C8C8C; margin-top:10px; }
+#today-pick .tp40-reason { border-left:4px solid #FFC612; padding:6px 0 6px 16px; font-family:"Noto Serif","notoserifcjktc",serif; font-size:15.5px; line-height:1.95; color:#1A1A1A; }
+#today-pick .tp40-reason small { display:block; font:700 9px/1 "Roboto Slab"; letter-spacing:3px; color:#8C8C8C; margin-top:12px; }
+/* 讀完理由後的去處:補一條通往文章的細箭頭,順便收掉右欄底部的空白 */
+#today-pick .tp40-more { display:inline-block; margin-top:20px; font:700 10px/1 "Roboto Slab"; letter-spacing:3px; color:#1A1A1A; text-decoration:none; border-bottom:1px solid #1A1A1A; padding-bottom:4px; }
+#today-pick .tp40-more:hover { color:#8C8C8C; border-color:#8C8C8C; }
 @media screen and (max-width: 1099px) {
-	#today-pick .tp40 { flex-direction:column; gap:16px; }
-	#today-pick { margin-bottom: 40px; }
+	#today-pick .tp40 { flex-direction:column; gap:16px; align-items:stretch; }
+	#today-pick .tp40-main { justify-content:flex-start; padding:0; }
+	#today-pick .tp40-title { font-size:21px; }
+	#today-pick { margin-top:18px; margin-bottom: 40px; }
 }
 </style>
 <div id="today-pick" class="row">
@@ -173,6 +180,7 @@ if ( $tp && 'publish' === $tp->post_status ) :
 			<?php if ( $tp_reason ) : ?>
 			<div class="tp40-reason"><?php echo esc_html( $tp_reason ); ?><small>WHY WE PICKED IT ── FLiPER 編輯室</small></div>
 			<?php endif; ?>
+			<a class="tp40-more" href="<?php echo get_permalink( $tp_id ); ?>">閱讀這篇 →</a>
 		</div>
 	</div>
 </div>
