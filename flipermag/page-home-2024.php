@@ -204,8 +204,12 @@ if ( $tp && 'publish' === $tp->post_status ) :
 	</div>
 
 	<?php 
+		// 今日精選那篇已佔據首屏,從下方時間流排除,避免同一屏出現兩次。
+		// 版面依賴固定的 11 篇($count 分組),所以排除後仍取滿 11 篇。
 		$query = new WP_Query( array(
-			'posts_per_page' => 11
+			'posts_per_page' => 11,
+			'post__not_in'   => ( ! empty( $tp_id ) && $tp ) ? array( (int) $tp_id ) : array(),
+			'ignore_sticky_posts' => true,
 		) );
 		$count = 0;
 		while( $query->have_posts() ) : $query->the_post();
