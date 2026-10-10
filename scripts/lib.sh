@@ -23,6 +23,34 @@ require_clean_git() {
   fi
 }
 
+require_pushed() {
+  # These scripts deploy the *working tree*, not a git ref, and they only ever
+  # checked that it was clean — never that it was pushed. The result is that
+  # production ran code existing on no remote: origin/main fell 16 commits
+  # behind the deployed site, and host-side hotfixes had to be reverse-imported
+  # into git afterwards. Refuse to widen that gap.
+  if [[ "${FLIPER_ALLOW_UNPUSHED:-0}" == "1" ]]; then
+    return
+  fi
+
+  local upstream
+  if ! upstream="$(git -C "$ROOT_DIR" rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)"; then
+    echo "Current branch has no upstream; the deployed code would exist only on this machine." >&2
+    echo "Push it first (git push -u origin HEAD), or set FLIPER_ALLOW_UNPUSHED=1." >&2
+    exit 1
+  fi
+
+  local ahead
+  ahead="$(git -C "$ROOT_DIR" rev-list --count "$upstream..HEAD")"
+  if [[ "$ahead" != "0" ]]; then
+    echo "Refusing to deploy: $ahead commit(s) not pushed to $upstream." >&2
+    echo "Whatever lands on production would be unrecoverable from any remote." >&2
+    git -C "$ROOT_DIR" log --oneline "$upstream..HEAD" >&2
+    echo "Push first, or set FLIPER_ALLOW_UNPUSHED=1 for a deliberate hotfix." >&2
+    exit 1
+  fi
+}
+
 require_command() {
   if ! command -v "$1" >/dev/null 2>&1; then
     echo "Missing required command: $1" >&2

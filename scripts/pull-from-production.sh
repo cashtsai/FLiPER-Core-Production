@@ -10,8 +10,10 @@ require_command ssh
 
 require_clean_git
 
-PRODUCTION_SSH="${FLIPER_PRODUCTION_SSH:-bitnami@ec2-18-183-67-197.ap-northeast-1.compute.amazonaws.com}"
-PRODUCTION_KEY="${FLIPER_PRODUCTION_KEY:-/Users/shanzhang/Public/key/higher-tyo.pem}"
+# Same stale defaults as deploy-production.sh had: another user's home
+# directory and the retired public EC2 DNS name.
+PRODUCTION_SSH="${FLIPER_PRODUCTION_SSH:-bitnami@100.87.74.24}"
+PRODUCTION_KEY="${FLIPER_PRODUCTION_KEY:-$HOME/Public/key/higher-tyo.pem}"
 PRODUCTION_PLUGINS_PATH="${FLIPER_PRODUCTION_PLUGINS_PATH:-/bitnami/wordpress/wp-content/plugins}"
 PRODUCTION_THEMES_PATH="${FLIPER_PRODUCTION_THEMES_PATH:-/bitnami/wordpress/wp-content/themes}"
 PRODUCTION_SSH_CMD="ssh -i $PRODUCTION_KEY $PRODUCTION_SSH"
