@@ -291,8 +291,12 @@ class FLiPER_User_Route extends WP_REST_Controller {
             $wp_user_avatar->wpua_action_process_option_update( $params[ 'id' ] );
             remove_filter( 'wpua_is_author_or_above', 'wpua_is_author_or_above_always_true' );
         }
+        // 整數,不要傳 array( 300, 300 )：wp-user-avatar 會把陣列交給
+        // get_avatar(),absint() 後變成 1px 請求,回傳最小的既有尺寸,並在
+        // PHP 8 每次呼叫噴 5 行「Array to string conversion」。
+        // 同樣的坑在 class-fp-app-api.php::avatar_url()。
         return new WP_REST_Response( array(
-            't' => get_wp_user_avatar_src( $user->ID, array( 300, 300 ) ),
+            't' => get_wp_user_avatar_src( $user->ID, 300 ),
             'o' => get_wp_user_avatar_src( $user->ID, 'full' )
         ), 200 );
     }
@@ -711,8 +715,9 @@ class FLiPER_User_Route extends WP_REST_Controller {
         $ret[ 'id' ] = $user_id;
         $ret[ 'username' ] = get_the_author_meta( 'user_login', $user_id );
         $ret[ 'display_name' ] = get_the_author_meta( 'display_name', $user_id );
+        // 整數,不要傳陣列 —— 見 class-fp-app-api.php::avatar_url() 的說明。
         $ret[ 'avatar' ] = array(
-            't' => get_wp_user_avatar_src( $user_id, array( 300, 300 ) ),
+            't' => get_wp_user_avatar_src( $user_id, 300 ),
             'o' => get_wp_user_avatar_src( $user_id, 'full' )
         );
         $ret[ 'url' ] = site_url( '/author/' . get_the_author_meta( 'user_nicename', $user_id ) );

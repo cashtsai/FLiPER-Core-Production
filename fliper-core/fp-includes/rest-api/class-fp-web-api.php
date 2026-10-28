@@ -140,7 +140,8 @@ class FLiPER_Web_Route extends WP_REST_Controller {
             $author = array(
                 'id' => $author_id,
                 'display_name' => get_the_author_meta( 'display_name', $author_id ),
-                'avatar' => get_wp_user_avatar_src( $author_id, array( 300, 300 ) ),
+                // 整數,不要傳陣列 —— 見 class-fp-app-api.php::avatar_url() 的說明。
+                'avatar' => get_wp_user_avatar_src( $author_id, 300 ),
                 'url' => site_url( '/author/' . get_the_author_meta( 'user_login', $author_id ) ),
                 'is_paid' => '0'
             );

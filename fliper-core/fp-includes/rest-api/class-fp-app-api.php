@@ -218,6 +218,10 @@ class FLiPER_App_API extends WP_REST_Controller {
             'category' => $this->primary_category( $post ),
             'author'   => $this->author_obj( $post->post_author, false ),
             'image'    => $this->image_obj( get_post_thumbnail_id( $post->ID ) ),
+            // 這張特色圖是 FED 生成的封面,還是作者自己上傳的照片？封面會把
+            // 標題與作者印在圖上,所以 app 看到封面時要收掉卡片的文字區塊,
+            // 否則同一句話會出現兩次。
+            'isGeneratedCover' => $this->is_generated_cover( $post->ID ),
             'date'     => get_post_time( 'c', true, $post->ID ),
             'dateText' => get_post_time( 'Y.m.d', false, $post->ID ),
             'readTime' => $this->read_time( $post->post_content ),
@@ -298,9 +302,32 @@ class FLiPER_App_API extends WP_REST_Controller {
         );
     }
 
+    /**
+     * 這篇的特色圖是不是 FED 生成的封面（而非作者自己上傳的照片）。
+     *
+     * app 先前只能用「副檔名 .png + 16:10 比例」來猜,因為那剛好是封面產生
+     * 器的輸出特徵。這個猜測擋住了封面改存 JPEG（同尺寸可省約 84% 位元組）,
+     * 因為作者上傳的照片同樣是 JPEG,換格式後兩者就無法區分。
+     *
+     * FED 本來就把生成封面的 attachment id 記在 post meta,直接回報這個事實,
+     * app 就不必再猜。注意這裡讀的是 fed 外掛的 meta key,屬跨外掛耦合 ——
+     * key 名稱變動時這裡要跟著改。
+     */
+    private function is_generated_cover( $post_id ) {
+        $generated = (int) get_post_meta( $post_id, '_fed_cover_attachment_id', true );
+        if ( ! $generated ) return false;
+        return $generated === (int) get_post_thumbnail_id( $post_id );
+    }
+
     private function avatar_url( $id ) {
         if ( function_exists( 'get_wp_user_avatar_src' ) ) {
-            $src = get_wp_user_avatar_src( $id, array( 192, 192 ) );
+            // 必須傳整數,不能傳 array( 192, 192 )。wp-user-avatar 會把 $size
+            // 直接串進字串並交給 get_avatar(),後者 absint() 一個陣列會得到 1,
+            // 於是 WordPress 解析成 1px 請求並回最小的既有尺寸 —— app 因此拿到
+            // 50x50,甚至 160x96 這種橫式裁切當作方形頭像。同一個陣列在 PHP 8
+            // 還會每次呼叫噴 5 行「Array to string conversion」灌爆 error log。
+            // 已回報給 ProfilePress（4.16.19 / 4.17.0 皆有）；傳整數即可避開。
+            $src = get_wp_user_avatar_src( $id, 192 );
             if ( $src ) return $src;
         }
         return get_avatar_url( $id, array( 'size' => 192 ) );
